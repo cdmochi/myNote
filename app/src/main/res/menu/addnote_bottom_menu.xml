@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/time_ic"
+        android:id="@+id/time_menu"
+        app:showAsAction="ifRoom"
+        android:title="Time" />
+    <item
+        android:icon="@drawable/date_ic"
+        android:id="@+id/date_menu"
+        app:showAsAction="ifRoom"
+        android:title="Date" />
+</menu>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NoteApplication</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+
+    <string name="plant_description">Mishler. Green plants include all organisms commonly
+        known as green algae and land plants, including liverworts, mosses,
+        ferns and other nonseed plants, and seed plants.</string>
+</resources>

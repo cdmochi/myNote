@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/header_inputlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/header_input"
+                    android:alpha="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/white"
+                    android:text="Heal the pain from this main pls"
+                    android:textAppearance="?textAppearanceHeadline6" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ScrollView
+                android:descendantFocusability="beforeDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="602dp"
+                android:layout_below="@id/header_inputlayout"
+                android:layout_marginTop="6dp"
+                android:fillViewport="false">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/description_inputlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:boxCornerRadiusTopStart="50dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id ="@+id/description_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="589dp"
+                        android:layout_gravity="top|left"
+                        android:alpha="0.56"
+                        android:background="@android:color/transparent"
+                        android:gravity="top|left"
+                        android:text="@string/plant_description"
+                        tools:ignore="RtlHardcoded" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/add_note_bottom_bar"
+            style="@style/Widget.MaterialComponents.BottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabCradleMargin="8dp"
+            app:fabCradleRoundedCornerRadius="10dp"
+            app:hideOnScroll="true"
+            app:layout_anchor="@+id/relativeLayout"
+            app:layout_anchorGravity="bottom"
+            app:fabAlignmentMode="end"
+            app:menu="@menu/addnote_bottom_menu"
+            app:navigationIcon="@drawable/menu_ic" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menu_fab"
+            app:layout_anchor="@id/add_note_bottom_bar"
+            app:layout_anchorGravity="end"
+            app:backgroundTint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_note_ic" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
