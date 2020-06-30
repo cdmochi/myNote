@@ -29,4 +29,10 @@ class NoteRepository(application : Application) {
         return notes
     }
 
+    suspend fun updateCheckedNote(id: Long, isCompleted: Boolean) {
+        noteDao.updateNoteById(id,isCompleted)
+    }
+
+
+
 }

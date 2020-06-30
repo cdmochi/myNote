@@ -1,29 +1,18 @@
 package com.example.noteapplication
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.CheckBox
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapplication.Data.Note
-import com.example.noteapplication.Data.NoteDatabase
-import com.example.noteapplication.Data.NoteRepository
 import com.example.noteapplication.adapters.NoteListAdapter
 import com.example.noteapplication.adapters.NoteListViewModel
 import com.example.noteapplication.adapters.NoteListViewModelFactory
@@ -42,24 +31,42 @@ class NoteListFragment : Fragment(){
         val binding = DataBindingUtil
             .inflate<NoteListFragmentBinding>(inflater,R.layout.note_list_fragment,container,false)
         setHasOptionsMenu(false)
+
+
+        //ViewModel init
         val application = requireNotNull(requireActivity().application)
-        val noteRepository = NoteRepository(application)
         noteListViewModelFactory = NoteListViewModelFactory(application)
         viewModel = ViewModelProviders.of(this,noteListViewModelFactory).get(NoteListViewModel::class.java)
 
-        //recyclerView Handler
-        val noteAdapter : NoteListAdapter = NoteListAdapter()
+        //setup the RecyclerView
         val recyclerView = binding.noteRecyclerview
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = noteAdapter
+        val noteAdapter : NoteListAdapter = NoteListAdapter()
+        noteAdapter.setCheckBoxListener(object : NoteListAdapter.onNoteClickListener{
 
+            override fun setNoteItemClick(note: Note, isCheck: Boolean) {
+                if (isCheck) {
+                    viewModel.onCheckStatusChange(note.id, false)
+                } else {
+                    viewModel.onCheckStatusChange(note.id, true)
+                }
+            }
 
-
-        hideActionBar()
-        viewModel.getAllNotes().observe(viewLifecycleOwner, Observer {
-           noteAdapter.setNewNotes(it)
         })
+        noteAdapter.notifyDataSetChanged()
+
+
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = noteAdapter
+        recyclerView.setHasFixedSize(true)
+
+        //observer ListChanges in Local database and update newNoteList
+        viewModel.getAllNotes().observe(viewLifecycleOwner, Observer {newList:List<Note>->
+           noteAdapter.setNewNotes(newList)
+        })
+
+
+
+
 
 
 
@@ -72,20 +79,17 @@ class NoteListFragment : Fragment(){
 
         }
 
-        //TODO 2 Call onClickItemListener to handle the BottomAppLayout
 
 
         return binding.root
     }
 
-    fun onCheckboxClicked(view: View) {
-        if (view is CheckBox) {
-            val checkState = view.isChecked
-
-        }
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        hideActionBar()
     }
+
+
 
     private fun closeFab(binding : NoteListFragmentBinding) {
         val fab = binding.addNoteFab
@@ -98,7 +102,6 @@ class NoteListFragment : Fragment(){
     private fun hideActionBar() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
     }
-
 
 
 

@@ -14,10 +14,17 @@ interface NoteDao {
     @Delete
     suspend fun delete(note : Note)
 
-    @Update
+    @Update()
     suspend fun update(note : Note)
 
     @Query("SELECT * FROM note_table")
     fun getAllNote() : LiveData<List<Note>>
+
+    @Query("UPDATE note_table SET isChecked = :completed WHERE id = :id")
+    suspend fun updateNoteById(id : Long, completed : Boolean)
+
+
+
+
 
 }
